@@ -1,0 +1,29 @@
+---
+import Header from '../components/Header.astro';
+import LeftBar from '../components/LeftBar.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>by akila</title>
+  </head>
+
+
+  <body>
+    <div class="layout-wrapper">
+      <Header />
+      <div class="content-row">
+        <LeftBar />
+        <main class="page-content">
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
+  
+</html>

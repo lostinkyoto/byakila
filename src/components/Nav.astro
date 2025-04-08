@@ -1,0 +1,46 @@
+---
+
+---
+<nav class="nav">
+  <a href="/work" data-comment="Take a look at my projects">Work</a>
+  <a href="/about" data-comment="Wanna know who I am?">About</a>
+  <a href="/store" data-comment="Get the goods here">Store</a>
+  <a href="/contact" data-comment="Say hi 👋">Contact</a>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav a {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem; /* Desktop default */
+    transition: all 0.3s ease;
+  }
+
+  .nav a:hover {
+    text-decoration: underline;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .nav a {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .nav {
+      gap: 1rem;
+    }
+
+    .nav a {
+      font-size: 0.75rem;
+    }
+  }
+</style>

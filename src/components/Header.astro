@@ -1,0 +1,53 @@
+---
+
+import Logo from '../components/Logo.astro';
+import Nav from '../components/Nav.astro';
+import Comment from '../components/Comment.astro';
+
+
+
+import '../components/styles/header.css';
+---
+<header class="site-header">
+  <div class="left"><Logo /></div>
+  <div class="center"><Comment /></div>
+  <div class="right"><Nav /></div>
+</header>
+
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', () => {
+    const commentBox = document.getElementById('comment-box');
+    const commentSpan = commentBox.querySelector('span');
+    const navLinks = document.querySelectorAll('.nav a');
+    const defaultComment = "Hi! How you doin’?";
+
+    let typingTimer;
+
+    function typeText(text) {
+      clearTimeout(typingTimer);
+      commentSpan.textContent = ""; // Clear existing
+      let i = 0;
+
+      function typeChar() {
+        if (i < text.length) {
+          commentSpan.textContent += text.charAt(i);
+          i++;
+          typingTimer = setTimeout(typeChar, 50); // Speed per letter
+        }
+      }
+
+      typeChar();
+    }
+
+    navLinks.forEach(link => {
+      const comment = link.dataset.comment;
+
+      link.addEventListener('mouseenter', () => typeText(comment));
+      link.addEventListener('mouseleave', () => typeText(defaultComment));
+    });
+
+    // Initial load
+    typeText(defaultComment);
+  });
+</script>

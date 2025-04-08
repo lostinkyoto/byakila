@@ -1,0 +1,48 @@
+---
+// Later we can pass props or slots here
+---
+<div class="left-bar">
+  <div class="left-bar-anim">[A]</div>
+  <div class="left-bar-text">Made great by the good</div>
+  <div class="left-bar-extra">[F]</div>
+</div>
+
+<style>
+
+.left-bar {
+  position: sticky;
+  top: 60px; /* sticks below the header */
+  width: 60px;
+  height: calc(100vh - 60px);
+  background: white;
+  border-right: 1px solid #ddd;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  padding: 0.5rem 0;
+  z-index: 999;
+}
+
+  .left-bar-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #333;
+    white-space: nowrap;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .left-bar-anim,
+  .left-bar-extra {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0;
+    overflow: hidden;
+  }
+</style>

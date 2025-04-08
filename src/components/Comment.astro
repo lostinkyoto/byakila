@@ -1,0 +1,38 @@
+---
+
+---
+<div class="comment" id="comment-box">
+  <span>Hi! How you doin’?</span>
+</div>
+
+
+<style>
+  .comment {
+    font-size: 0.875rem;
+    color: rgb(5, 4, 4);
+    opacity: 0.75;
+    border: 1px solid red;
+    margin: 0 5px;
+    overflow: hidden;
+  }
+
+  .comment span {
+    display: inline-block;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+  }
+
+  .comment span.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+  }
+
+  /* Hide comment on small screens */
+  @media (max-width: 640px) {
+    .comment {
+      display: none;
+    }
+  }
+</style>
