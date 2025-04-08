@@ -1,0 +1,105 @@
+---
+const rotatingLines = [
+  "grow your brand",
+  "attract the right clients",
+  "showcase your work",
+  "clarify your message"
+];
+
+---
+
+<div class="intro-wrapper">
+  <p class="intro-line">You make products</p>
+  <p class="intro-line">that matter.</p>
+  <p class="intro-line">You want to</p>
+  <p class="intro-line rotating-line"><span id="rotating-text"></span></p>
+  <p class="intro-line">I make websites</p>
+  <p class="intro-line"> that work</p>
+  <p class="intro-line"> for you.</p>
+  
+</div>
+
+<style>
+  .intro-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10vh 1rem 5vh 1rem;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    background: transparent;
+    z-index: 1;
+    position: relative;
+    text-align: center;
+  }
+
+  .intro-line {
+    margin: 0 0 0.4rem 0;
+  }
+
+  .rotating-line {
+    min-height: 1.2em;
+  }
+
+  #rotating-text {
+    display: inline-block;
+    border-right: 2px solid currentColor;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blinkCursor 0.75s step-end infinite;
+  }
+
+  @keyframes blinkCursor {
+    50% {
+      border-color: transparent;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .intro-wrapper {
+      font-size: clamp(1.4rem, 6vw, 3rem);
+      padding: 15vh 1rem 3vh 1rem;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+  const lines = [
+    "earn their trust",
+    "grow your brand",
+    "attract right clients",
+    "make work shine",
+    "connect your message"
+  ];
+
+  const el = document.getElementById("rotating-text");
+  let index = 0;
+  let charIndex = 0;
+  let currentLine = lines[0];
+  let typing = true;
+
+  function typeLine() {
+    if (typing) {
+      if (charIndex <= currentLine.length) {
+        el.textContent = currentLine.substring(0, charIndex++);
+        setTimeout(typeLine, 40);
+      } else {
+        typing = false;
+        setTimeout(typeLine, 2000);
+      }
+    } else {
+      if (charIndex >= 0) {
+        el.textContent = currentLine.substring(0, charIndex--);
+        setTimeout(typeLine, 20);
+      } else {
+        typing = true;
+        index = (index + 1) % lines.length;
+        currentLine = lines[index];
+        setTimeout(typeLine, 300);
+      }
+    }
+  }
+
+  typeLine();
+</script>
