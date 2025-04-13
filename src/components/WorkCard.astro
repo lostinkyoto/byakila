@@ -1,0 +1,47 @@
+---
+const { link, videoSrc, title, subtitle, categories = [] } = Astro.props;
+import './styles/workcard.css';
+---
+
+<div class="workcard-container" style="background: white; padding:10px;">
+
+  <div class="top-line"></div>
+
+  <div class="workcard">
+    <a href={link} class="workcard-link">
+      <div class="card-content">
+
+        <div class="image-container">
+          <video
+          id="scroll-video"
+          src="/animations/animation.mp4"
+          preload="auto"
+          muted
+          playsinline
+          disableRemotePlayback
+        ></video>
+
+        </div>
+
+        <div class="text-wrapper">
+          <div class="title-section">
+            <h2>{title}</h2>
+            <p class="subtitle">{subtitle}</p>
+          </div>
+          <div class="category-section">
+            {categories.map(category => (
+              <span class="category">{category}</span>
+            ))}
+          </div>
+          <div class="explore-button">
+            <span>Explore</span>
+          </div>
+        </div>
+
+      </div>
+    </a>
+  </div>
+
+
+
+</div>

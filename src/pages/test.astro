@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IntroText from '../components/IntroText.astro';
+---
+
+<Layout>
+  <canvas id="tree-canvas"></canvas>
+  
+  <script  type="text/javascript">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+    console.log('🚀 Tree script starting execution');
+    
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('tree-canvas');
+      console.log('🔍 Canvas element:', canvas);
+      
+      if (!canvas) {
+        console.error('❌ Canvas element not found!');
+        return;
+      }
+      
+      // Renderer setup
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      console.log('✅ Renderer created successfully');
+      
+      // Scene setup
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x1a1a1a);
+      
+      // Camera setup
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 1.5, 5);
+      
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+      scene.add(ambientLight);
+      
+      // Add directional light for better visibility
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+      
+      // Debug helper
+      const axesHelper = new THREE.AxesHelper(2);
+      scene.add(axesHelper);
+      
+      // Global reference to the model for animation
+      let treeModel = null;
+      
+      // Model loading
+      const loader = new GLTFLoader();
+      let mixer;
+      
+      // Log all paths we'll try
+      const possiblePaths = [
+        '/images/stylized_tree.glb',
+        '../images/stylized_tree.glb',
+        './images/stylized_tree.glb'
+      ];
+      console.log('🔍 Will try these paths:', possiblePaths);
+      
+      // Try loading the model
+      loader.load(
+        '/images/stylized_tree.glb',
+        (gltf) => {
+          console.log('✅ Model loaded successfully:', gltf);
+          
+          treeModel = gltf.scene;
+          treeModel.scale.set(3, 3, 3);
+          treeModel.position.set(0, -0.5, 0);
+          treeModel.rotation.y = Math.PI;
+          
+          scene.add(treeModel);
+          console.log('✅ Model added to scene');
+          
+          if (gltf.animations.length > 0) {
+            mixer = new THREE.AnimationMixer(treeModel);
+            gltf.animations.forEach((clip) => {
+              const action = mixer.clipAction(clip);
+              action.play();
+            });
+            console.log('🎬 Playing animations');
+          }
+        },
+        (progress) => {
+          const percentComplete = Math.round((progress.loaded / progress.total) * 100);
+          console.log(`📊 Loading progress: ${percentComplete}%`);
+        },
+        (error) => {
+          console.error('❌ Error loading model:', error);
+          // Try the next path in the list
+          tryAlternatePath(1);
+        }
+      );
+      
+      // Function to try alternate paths
+      function tryAlternatePath(index) {
+        if (index >= possiblePaths.length) {
+          console.error('❌ All paths failed.');
+          return;
+        }
+        
+        console.log(`🔄 Trying alternate path: ${possiblePaths[index]}`);
+        
+        loader.load(
+          possiblePaths[index],
+          (gltf) => {
+            console.log(`✅ Model loaded from alternate path!`);
+            treeModel = gltf.scene;
+            treeModel.scale.set(3, 3, 3);
+            treeModel.position.set(0, -0.5, 0);
+            treeModel.rotation.y = Math.PI;
+            scene.add(treeModel);
+            
+            if (gltf.animations.length > 0) {
+              mixer = new THREE.AnimationMixer(treeModel);
+              gltf.animations.forEach((clip) => {
+                mixer.clipAction(clip).play();
+              });
+            }
+          },
+          undefined,
+          () => tryAlternatePath(index + 1)
+        );
+      }
+      
+      // Scroll tracking vars
+      let scrollY = window.scrollY;
+      let targetRotationY = Math.PI; // Starting rotation
+      
+      // Listen to scroll events
+      window.addEventListener('scroll', () => {
+        // Calculate how much we've scrolled
+        const newScrollY = window.scrollY;
+        const scrollDelta = newScrollY - scrollY;
+        scrollY = newScrollY;
+        
+        // Update target rotation based on scroll
+        // Adjust the multiplier (0.005) to control sensitivity
+        if (treeModel) {
+          targetRotationY += scrollDelta * 0.005;
+        }
+      });
+      
+      // Animation loop
+      const clock = new THREE.Clock();
+      
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        const delta = clock.getDelta();
+        
+        // Smooth rotation lerping
+        if (treeModel) {
+          // Smoothly interpolate current rotation to target rotation
+          treeModel.rotation.y += (targetRotationY - treeModel.rotation.y) * 0.1;
+        }
+        
+        if (mixer) mixer.update(delta);
+        
+        renderer.render(scene, camera);
+      }
+      
+      animate();
+      
+      // Handle window resizing
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    });
+  </script>
+  
+  <!-- Add some scrollable content for testing -->
+  <div style="height: 400vh; padding-top: 100vh;">
+    <IntroText />
+    <div style="padding: 20px; margin-top: 50vh;">
+      <h2>Scroll to see the tree spin!</h2>
+      <p>Keep scrolling to make the tree rotate more...</p>
+    </div>
+  </div>
+
+  <style>
+    canvas#tree-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+    }
+  </style>
+</Layout>

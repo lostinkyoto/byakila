@@ -1,0 +1,171 @@
+/* Container for entire component including lines */
+.workcard-container {
+  margin: 2rem 0;
+  padding: 0;
+}
+
+/* Horizontal lines */
+.top-line, .bottom-line {
+  height: 1px;
+  background-color: #000004;
+  width: 100%;
+  opacity: 0.3;
+}
+
+/* Workcard structure */
+.workcard {
+  padding: 2rem 0;
+}
+
+.workcard-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Content layout */
+.card-content {
+  display: flex;
+  gap: clamp(1rem, 3vw, 5%);} 
+
+/* Image container on the left */
+.image-container {
+  flex: 1.5;
+  overflow: hidden;
+  border-radius: 1rem;
+
+}
+
+.image-container img {
+  width: 90%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+  border-radius: 1rem ;
+}
+
+.workcard-link:hover .image-container img {
+  transform: scale(1.03);
+}
+
+/* Text container on the right */
+.text-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+/* Title section */
+.title-section h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #000003;
+  margin: 0;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #000000;
+  margin: 0.5rem 0 2rem 0;
+  font-weight: 500;
+}
+
+/* Category section */
+.category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.category {
+  font-size: 1rem;
+  color: #000000;
+}
+
+/* Explore button */
+.explore-button {
+  display: inline-block;
+  background-color: #000000;
+  color: white;
+  padding: 0.5rem 1.75rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
+  width: fit-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.explore-button:hover {
+  background-color: #000000;
+}
+
+/* For very large screens, constrain image size */
+@media (min-width: 1600px) {
+  .image-container img {
+    width: 1100px;
+    height: 500px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .card-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .text-wrapper {
+    align-items: center;
+    padding: 0;
+    width: 100%; /* Full width for better centering */
+    text-align: center;
+  }
+  
+  .title-section {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .title-section h2 {
+    font-size: 2.2rem; /* Smaller title on mobile */
+    text-align: center;
+  }
+  
+  .subtitle {
+    text-align: center;
+  }
+  
+  .category-section {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .category {
+    text-align: center;
+  }
+  
+  .image-container img {
+    height: auto;
+    aspect-ratio: 2.2/1;
+    border-radius: 0.75rem;
+  }
+
+  .image-container video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1; /* Adjust this based on your actual video ratio */
+    object-fit: cover;
+  }
+  
+  .explore-button {
+    margin: 0.5rem auto 0; /* Center horizontally */
+    display: block;
+  }
+}

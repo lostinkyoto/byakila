@@ -24,10 +24,10 @@ const rotatingLines = [
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 10vh 1rem 5vh 1rem;
-    font-size: clamp(2rem, 5vw, 4.5rem);
+    padding: 9vh 1rem 5vh 1rem;
+    font-size: clamp(2rem, 5vw, 6rem);
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1;
     background: transparent;
     z-index: 1;
     position: relative;
@@ -59,18 +59,17 @@ const rotatingLines = [
   @media (max-width: 768px) {
     .intro-wrapper {
       font-size: clamp(1.4rem, 6vw, 3rem);
-      padding: 15vh 1rem 3vh 1rem;
+      padding: 9vh 1rem 3vh 1rem;
     }
   }
 </style>
 
 <script type="text/javascript">
   const lines = [
-    "earn their trust",
-    "grow your brand",
-    "attract right clients",
-    "make work shine",
-    "connect your message"
+  "grow your brand",
+  "attract the right clients",
+  "showcase your work",
+  "clarify your message"
   ];
 
   const el = document.getElementById("rotating-text");
