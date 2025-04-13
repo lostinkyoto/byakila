@@ -1,14 +1,55 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import IntroText from '../components/IntroText.astro'
+import WorkCard from '../components/WorkCard.astro'
+
+
 ---
 
 <Layout>
-  <div style="border: 1px solid rgb(194, 114, 70);">
-    <div style="height: 2000px; background: lightgray; display: flex; justify-content: center;">
+  <div>
+
+    <div style="background: transparent; display: flex; justify-content: center;">
 
         <IntroText />
+      
      
     </div>
+
   </div>
+
+  <WorkCard 
+  link="/project/lexfirm" 
+  videoSrc="/workcards/law.mp4"
+  title="Lex Legal" 
+  subtitle="Clarity. Counsel. Confidence." 
+  categories={["Law Firm", "Corporate", "Design System"]} 
+/>
+
+  <WorkCard 
+  link="/project/one-of-one" 
+  videoSrc="/workcards/wealth.mp4"
+  title="Wealth Management" 
+  subtitle="Climb higher, plan smarter, and achieve more with customized strategies built around you." 
+  categories={["Brand Identity", "Advertising", "Social"]} 
+/>
+
+<WorkCard 
+  link="/project/derma" 
+  videoSrc="/workcards/derma.mp4"
+  title="SkinKind Clinic" 
+  subtitle="Care That Shows" 
+  categories={["Healthcare", "UX/UI", "Brand Identity"]} 
+/>
+
+
+
+<WorkCard 
+  link="/project/atelier" 
+  videoSrc="/workcards/arch.mp4"
+  title="Studio Atelier" 
+  subtitle="Form Meets Function" 
+  categories={["Architecture", "Portfolio", "Minimal"]} 
+/>
+
 </Layout>
